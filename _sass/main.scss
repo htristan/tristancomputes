@@ -70,36 +70,35 @@ hr {
     }
 }
 
-/* New styles for improved visibility */
 #about {
+  .tags {
+    margin-bottom: 1.5em;
+    
     .tag {
-        background-color: #2196F3; /* A more saturated blue */
-        color: white;
-        font-weight: 500;
-        padding: 0.5em 1em;
-        margin-right: 0.5em;
-        margin-bottom: 0.5em;
-        border-radius: 4px;
+      background-color: #2196F3 !important; /* Darker blue */
+      color: white !important;
+      font-weight: 500 !important;
+      padding: 0.5em 1em !important;
+      margin-right: 0.5em !important;
+      margin-bottom: 0.5em !important;
+      border-radius: 4px !important;
     }
+  }
 
-    .button.is-outlined {
-        border-color: #00796B; /* A darker teal color */
-        color: #00796B;
-        font-weight: 600;
-        transition: background-color 0.3s, color 0.3s;
+  .button.is-outlined {
+    border-color: #00796B !important; /* Darker teal */
+    color: #00796B !important;
+    font-weight: 600 !important;
+    transition: background-color 0.3s, color 0.3s !important;
 
-        &:hover {
-            background-color: #00796B;
-            color: white;
-        }
+    &:hover {
+      background-color: #00796B !important;
+      color: white !important;
     }
+  }
 
-    p {
-        color: #333; /* Slightly darker text for better readability */
-        margin-bottom: 1.5em;
-    }
-
-    .tags {
-        margin-bottom: 1.5em;
-    }
+  p {
+    color: #333 !important; /* Darker text for better readability */
+    margin-bottom: 1.5em !important;
+  }
 }
