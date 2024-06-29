@@ -3,7 +3,7 @@ layout: compress
 ---
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 {% include head.html %}
 
 <body>
@@ -14,27 +14,77 @@ layout: compress
   <!--Footer begins here-->
   {% include footer.html %}
 </body>
-<script>
-  window.addEventListener("scroll", function (event) {
-    var scroll = this.scrollY;
-    var item = document.getElementsByClassName('navbar-item');
-    /* console.log(scroll); */
-    if (scroll < 565) {
-      item[1].classList.add('is-active');
-      item[2].classList.remove('is-active');
-      item[3].classList.remove('is-active');
+  <script>
+    // Debounce function
+    function debounce(func, wait = 20, immediate = true) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        var later = function() {
+          timeout = null;
+          if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+      };
     }
-    if (scroll > 565 && scroll < 1130) {
-      item[1].classList.remove('is-active');
-      item[2].classList.add('is-active');
-      item[3].classList.remove('is-active');
+
+    // Optimized scroll handler
+    function handleScroll() {
+      var scroll = window.scrollY;
+      var items = document.getElementsByClassName('navbar-item');
+      if (scroll < 565) {
+        items[1].classList.add('is-active');
+        items[2].classList.remove('is-active');
+        items[3].classList.remove('is-active');
+      } else if (scroll > 565 && scroll < 1130) {
+        items[1].classList.remove('is-active');
+        items[2].classList.add('is-active');
+        items[3].classList.remove('is-active');
+      } else if (scroll > 1130) {
+        items[1].classList.remove('is-active');
+        items[2].classList.remove('is-active');
+        items[3].classList.add('is-active');
+      }
     }
-    if (scroll > 1130) {
-      item[1].classList.remove('is-active');
-      item[2].classList.remove('is-active');
-      item[3].classList.add('is-active');
+
+    // Smooth scrolling function
+    function smoothScroll(target, duration) {
+      var target = document.querySelector(target);
+      var targetPosition = target.getBoundingClientRect().top;
+      var startPosition = window.pageYOffset;
+      var distance = targetPosition - startPosition;
+      var startTime = null;
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        var timeElapsed = currentTime - startTime;
+        var run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      }
+
+      function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+      }
+
+      requestAnimationFrame(animation);
     }
-  });
-</script>
+
+    // Event listeners
+    window.addEventListener('scroll', debounce(handleScroll));
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        smoothScroll(this.getAttribute('href'), 1000);
+      });
+    });
+  </script>
 
 </html>
