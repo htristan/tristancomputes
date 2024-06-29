@@ -70,22 +70,39 @@ a.navbar-item.is-active {
 
 #about {
     .image {
-        max-width: 20vmax;
-        margin: auto;
-
-        img {
-            border: 0.25rem dotted black;
-        }
+      max-width: 20vmax;
+      margin: auto;
+      @media (max-width: 768px) {
+        max-width: 40vmax;
+      }
+      img {
+        border: 0.25rem dotted black;
+      }
     }
-
     a {
         min-width: 25vmax;
         margin: 0.5rem;
     }
 
+  .columns {
+    align-items: flex-start;
+  }
+
+  .column:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+    h2.title {
+      align-self: flex-start;
+      margin-bottom: 1.5rem !important;
+    }
+
     // New styles for tags
     .tags {
         margin-bottom: 1.5em;
+        margin-top: 1em;
         
         .tag {
             background-color: #2196F3 !important; // Darker blue
@@ -124,6 +141,7 @@ a.navbar-item.is-active {
             color: #333 !important; // Darker text for better readability
             margin-bottom: 1.5em !important;
         }
+        text-align: left;
     }
 }
 
