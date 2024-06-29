@@ -82,6 +82,49 @@ a.navbar-item.is-active {
         min-width: 25vmax;
         margin: 0.5rem;
     }
+
+    // New styles for tags
+    .tags {
+        margin-bottom: 1.5em;
+        
+        .tag {
+            background-color: #2196F3 !important; // Darker blue
+            color: white !important;
+            font-weight: 500 !important;
+            padding: 0.5em 1em !important;
+            margin-right: 0.5em !important;
+            margin-bottom: 0.5em !important;
+            border-radius: 4px !important;
+            border: none !important;
+
+            &.is-info.is-light {
+                background-color: #2196F3 !important; // Ensure this overrides Bulma's is-info is-light
+                color: white !important;
+            }
+        }
+    }
+
+    // New styles for the button
+    .button.is-primary.is-outlined.is-rounded {
+        border: 2px solid #00796B !important; // Darker teal
+        color: #00796B !important;
+        background-color: transparent !important;
+        font-weight: 600 !important;
+        transition: all 0.3s ease !important;
+
+        &:hover, &:focus {
+            background-color: #00796B !important;
+            color: white !important;
+        }
+    }
+
+    // New styles for paragraphs
+    .content {
+        p {
+            color: #333 !important; // Darker text for better readability
+            margin-bottom: 1.5em !important;
+        }
+    }
 }
 
 #contact {
