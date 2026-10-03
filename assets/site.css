@@ -68,3 +68,101 @@ h1,h2{font-family:var(--sans);font-weight:600;letter-spacing:-.055em;line-height
 @media print{.career-hint,.career-footer,.career-dot{display:none}.career-shell{border:0;background:none;overflow:visible}.career-track{overflow:visible}.career-canvas{display:block;width:auto;height:auto;padding:0}.career-canvas:before,.career-point:after{display:none}.career-point{width:auto;height:auto;margin-bottom:16px;break-inside:avoid}.career-role,.career-point:nth-child(odd) .career-role{position:static;width:auto;min-height:0;transform:none;opacity:1;box-shadow:none}}
 
 .is-enhanced .career-today{display:inline-block}
+
+/* Small, once-only entrances; layouts and reading positions stay fixed. */
+.motion-enter{transition:opacity 420ms ease var(--entrance-delay,0ms),transform 460ms cubic-bezier(.22,.61,.36,1) var(--entrance-delay,0ms),border-color .2s,background .2s}
+.motion-pending{opacity:0;transform:translateY(14px)}
+.motion-visible{opacity:1;transform:none}
+:is(.button,.text-link,.read-label,.contact-option,.next-story) [aria-hidden=true]{display:inline-block;transition:transform 280ms cubic-bezier(.22,.61,.36,1)}
+.button:is(:hover,:focus-visible) [aria-hidden=true],.text-link:is(:hover,:focus-visible) [aria-hidden=true],.work-card:is(:hover,:focus-within) .read-label [aria-hidden=true],.contact-option:is(:hover,:focus-visible)>[aria-hidden=true],.next-story:is(:hover,:focus-visible)>[aria-hidden=true]{transform:translate(3px,-3px)}
+
+/* Project miniatures: an approved contact list and a staged platform cutover. */
+.project-mini{width:100%;max-width:272px;margin:22px 0 0}
+.project-mini svg{width:100%;height:auto;overflow:visible}
+.project-mini text{font:11px var(--sans);letter-spacing:0;fill:var(--muted)}
+.project-mini path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5}
+.migration-platform{fill:var(--paper);stroke:#c6d3cc;stroke-width:1.2}.migration-destination{stroke:#89aa99;fill:#f3f8f5}
+.migration-new{stroke:var(--accent)}.migration-rollback{stroke:#9aae9f;stroke-dasharray:3 3}
+.migration-batch rect{fill:#eaf2ed;stroke:#a3bdad;stroke-width:1}.migration-batch circle{fill:var(--accent)}.migration-batch text{font-size:9px}
+.migration-caption{font-size:10px!important}.migration-mini.is-armed .migration-new{stroke-dasharray:1;stroke-dashoffset:1}
+.migration-mini.is-armed .migration-batch{transform:translateX(-174px)}
+.migration-mini.is-playing .migration-new{animation:project-draw 550ms ease 100ms forwards}
+.migration-mini.is-playing .migration-batch{animation:migration-batch-move 800ms cubic-bezier(.22,.61,.36,1) forwards}
+.migration-mini.is-playing .migration-batch-1{animation-delay:350ms}.migration-mini.is-playing .migration-batch-2{animation-delay:750ms}.migration-mini.is-playing .migration-batch-3{animation-delay:1150ms}
+@keyframes project-draw{to{stroke-dashoffset:0}}
+@keyframes migration-batch-move{to{transform:translateX(0)}}
+@keyframes project-appear{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+.yello-heading{font-size:10px!important;font-weight:500!important}.yello-contact>circle{fill:#edf4ef;stroke:#aac2b3;stroke-width:1}.yello-person{fill:none;stroke:#80988b;stroke-width:1.1}
+.yello-unknown>circle{fill:#f5f6f7;stroke:#d3dad6;stroke-width:1}.yello-unknown text{fill:#7a8580}.yello-denied-path{stroke:#b1beb5;stroke-dasharray:2 3}.yello-stop{fill:#f5f6f7;stroke:#b1beb5;stroke-width:1}.yello-stop-mark{stroke:#809087}
+.yello-device{fill:var(--paper);stroke:#819b8e;stroke-width:1.3}.yello-screen{fill:#f9fbfa;stroke:#e0e8e2;stroke-width:.8}.yello-detail{stroke:#b3c1b8}
+.yello-brand{font-size:10px!important;font-weight:600!important;fill:var(--ink)!important}
+.yello-connection{stroke:var(--accent)}.yello-approved circle{fill:#edf4ef;stroke:#89b29e;stroke-width:1}.yello-approved path{stroke:var(--accent)}
+.yello-message>path:first-child{fill:#dfeee5;stroke:none}.yello-message-2>path:first-child{fill:#eeeaca}.yello-message-line{stroke:#789485;stroke-width:1.1!important}
+.yello-mini.is-armed .yello-connection{stroke-dasharray:1;stroke-dashoffset:1}.yello-mini.is-armed :is(.yello-approved,.yello-message){opacity:0}
+.yello-mini.is-playing .yello-approved{animation:project-appear 250ms ease 100ms forwards}.yello-mini.is-playing .yello-approved-2{animation-delay:450ms}
+.yello-mini.is-playing .yello-connection{animation:project-draw 500ms ease 250ms forwards}.yello-mini.is-playing .yello-connection-2{animation-delay:600ms}
+.yello-mini.is-playing .yello-message{animation:project-appear 350ms ease 650ms forwards}.yello-mini.is-playing .yello-message-2{animation-delay:1050ms}
+@media(prefers-reduced-motion:reduce){.motion-enter,.motion-pending{opacity:1;transform:none;transition:none}:is(.button,.text-link,.read-label,.contact-option,.next-story) [aria-hidden=true]{transition:none;transform:none!important}.migration-mini *,.yello-mini *{animation:none!important}.migration-mini .migration-batch{transform:none!important}.migration-mini .migration-new,.yello-mini .yello-connection{stroke-dashoffset:0!important}.yello-mini :is(.yello-approved,.yello-message){opacity:1!important;transform:none!important}}
+@media print{.motion-enter,.motion-pending{opacity:1;transform:none;transition:none}.migration-mini,.yello-mini{display:none}}
+
+.reading-progress{display:none;position:fixed;inset:0 0 auto;height:2px;z-index:5;pointer-events:none}
+.reading-progress.is-enabled{display:block}.reading-progress span{display:block;width:100%;height:100%;background:var(--accent);transform:scaleX(0);transform-origin:0 50%;will-change:transform}
+@media print{.yello-mini,.reading-progress{display:none!important}}
+
+/* Labs: ideas enter a test, weaker ones recede, and a product takes shape. */
+.project-caption{font-size:10px!important}
+.labs-source rect{fill:none;stroke:#e0e6e2;stroke-width:1}.labs-test{fill:#f8faf9;stroke:#bacdbf;stroke-dasharray:3 3;stroke-width:1}
+.labs-route{stroke:#c1d0c5}.labs-build-route{stroke:var(--accent)}
+.labs-experiment{transform:translateX(101px)}.labs-experiment rect{fill:#edf4ef;stroke:#9db8a7;stroke-width:1}.labs-experiment circle{fill:#7d9e8a}.labs-experiment path{stroke:#a0b6a7;stroke-width:1!important}.labs-discard{opacity:.22}
+.labs-product>rect:first-child{fill:#f2f7f4;stroke:#89aa99;stroke-width:1.2}.labs-product path{stroke:#a0b6a7;stroke-width:1!important}.labs-product circle{fill:#a0b6a7}.labs-product-block{fill:#dcebe1;stroke:none}
+.labs-mini.is-armed .labs-experiment{transform:none;opacity:1}.labs-mini.is-armed .labs-build-route{stroke-dasharray:1;stroke-dashoffset:1}.labs-mini.is-armed .labs-product{opacity:0}
+.labs-mini.is-playing .labs-experiment{animation:labs-test-move 700ms cubic-bezier(.22,.61,.36,1) 150ms forwards}
+.labs-mini.is-playing .labs-discard{animation:labs-test-move 700ms cubic-bezier(.22,.61,.36,1) 150ms forwards,labs-recede 500ms ease 850ms forwards}
+.labs-mini.is-playing .labs-experiment-3{animation-delay:300ms,1000ms}
+.labs-mini.is-playing .labs-build-route{animation:project-draw 500ms ease 1100ms forwards}.labs-mini.is-playing .labs-product{animation:project-appear 400ms ease 1400ms forwards}
+@keyframes labs-test-move{to{transform:translateX(101px)}}
+@keyframes labs-recede{to{opacity:.22}}
+
+/* Insourcing: own the voice service layer, then improve its economics. */
+.voice-platform{fill:var(--paper);stroke:#c6d3cc;stroke-width:1.2}.voice-owned{fill:#f3f8f5;stroke:#89aa99}
+.voice-base{fill:#eef1ef;stroke:#c6d3cc;stroke-width:1}.voice-base-label{font-size:9px!important}
+.voice-transfer{stroke:#89aa99}.voice-service rect{fill:#e4efe8;stroke:#89aa99;stroke-width:1}.voice-service text{font-size:10px!important;fill:var(--accent)!important}
+.voice-cost-track{fill:#e7ede9}.voice-cost-fill{fill:#789d88;transform-box:fill-box;transform-origin:0 50%;transform:scaleX(.7)}.voice-cost-result{font-size:10px!important;fill:var(--accent)!important}
+.voice-mini.is-armed .voice-service{transform:translateX(-174px)}.voice-mini.is-armed .voice-cost-fill{transform:scaleX(1)}.voice-mini.is-armed .voice-transfer{stroke-dasharray:1;stroke-dashoffset:1}
+.voice-mini.is-playing .voice-transfer{animation:project-draw 500ms ease 100ms forwards}.voice-mini.is-playing .voice-service{animation:migration-batch-move 900ms cubic-bezier(.22,.61,.36,1) 250ms forwards}
+.voice-mini.is-playing .voice-cost-fill{animation:voice-cost-improve 700ms cubic-bezier(.22,.61,.36,1) 1150ms forwards}
+@keyframes voice-cost-improve{to{transform:scaleX(.7)}}
+
+/* AI workflow: application responses become a list for human review. */
+.ai-input rect{fill:#f8faf9;stroke:#c6d3cc;stroke-width:1}.ai-input path{stroke:#becdc3;stroke-width:1!important}
+.ai-flow{stroke:#89aa99}.ai-engine{fill:#edf4ef;stroke:#89aa99;stroke-width:1.2}.ai-engine-label{font-size:10px!important;fill:var(--accent)!important}
+.ai-review-panel{fill:#f8faf9;stroke:#c6d3cc;stroke-width:1}.ai-review-row rect{fill:#edf4ef;stroke:#d4e3d9;stroke-width:.8}.ai-review-row text{font-size:9px!important;fill:var(--accent)!important}.ai-review-row path{stroke:#a4bcae;stroke-width:1!important}
+.ai-mini.is-armed .ai-flow{stroke-dasharray:1;stroke-dashoffset:1}.ai-mini.is-armed .ai-review-row{opacity:0}
+.ai-mini.is-playing .ai-flow-in{animation:project-draw 450ms ease 150ms forwards}.ai-mini.is-playing .ai-flow-out{animation:project-draw 450ms ease 650ms forwards}
+.ai-mini.is-playing .ai-review-row{animation:project-appear 300ms ease 1050ms forwards}.ai-mini.is-playing .ai-review-row-2{animation-delay:1300ms}.ai-mini.is-playing .ai-review-row-3{animation-delay:1550ms}
+@media(prefers-reduced-motion:reduce){.project-mini *{animation:none!important}.labs-mini .labs-experiment{transform:translateX(101px)!important;opacity:1!important}.labs-mini .labs-discard{opacity:.22!important}.labs-mini .labs-product,.ai-mini .ai-review-row{opacity:1!important;transform:none!important}.voice-mini .voice-service{transform:none!important}.voice-mini .voice-cost-fill{transform:scaleX(.7)!important}.labs-mini .labs-build-route,.voice-mini .voice-transfer,.ai-mini .ai-flow{stroke-dashoffset:0!important}}
+@media print{.project-mini{display:none!important}}
+
+/* Quiet homepage motifs: app distribution, conversations, and accumulated revenue. */
+.proof-grid{--proof-gap:30px}.proof-item{min-width:0}.proof-art{position:relative;display:grid;place-items:center;height:104px;margin:18px 0 14px}
+.proof-art svg{position:relative;z-index:1;width:176px;height:104px;overflow:visible}
+.proof-item:not(:last-child) .proof-art:after{content:'';position:absolute;top:50%;left:calc(50% + 88px);width:calc(100% + var(--proof-gap) - 176px);height:1px;background:linear-gradient(90deg,transparent,#dce9df 20%,#dce9df 80%,transparent);transform-origin:0 50%}
+.proof-halo{fill:#f5f8f6}.proof-art path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.3}
+.proof-device{fill:#fff;stroke:#829f8e;stroke-width:1.3}.proof-screen{fill:#f5f9f6;stroke:#dde8e0;stroke-width:.8}.proof-detail{stroke:#a5b9ac}.proof-faint-tile{fill:#e5eee8}
+.proof-download-arrow{stroke:#84a392}.proof-app-tile rect{fill:#497962}.proof-app-tile path{stroke:#fff;stroke-width:1.2}
+.proof-people-links{stroke:#c6dace}.proof-person circle:not(.proof-avatar){fill:#b6ccbf;stroke:#809f8b;stroke-width:.8}.proof-avatar{fill:#edf4ef;stroke:#a5c0af;stroke-width:1}.proof-person path{stroke:#809f8b}
+.proof-chat>path:first-child{fill:#e3eee7;stroke:#a2bdac;stroke-width:1}.proof-chat-detail{stroke:#8fad9b;stroke-width:1!important}.proof-chat-2>path:first-child{fill:#edf4ef}
+.proof-ledger rect{fill:#f0f5f1;stroke:#b9cebf;stroke-width:1}.proof-ledger-middle rect{fill:#e4eee7;stroke:#a9c3b3}.proof-ledger-front>rect:first-child{fill:#fff;stroke:#8eae9b;stroke-width:1.2}.proof-ledger-front text{font:500 19px var(--sans);letter-spacing:0;fill:var(--accent)}.proof-ledger-front path{stroke:#bacfc2}.proof-ledger-front .proof-ledger-mark{fill:#9bbcaa;stroke:none}
+.proof-art.is-armed .proof-download-arrow{stroke-dasharray:1;stroke-dashoffset:1}.proof-art.is-armed .proof-app-tile{opacity:0;transform:translateY(-10px)}
+.proof-art.is-playing .proof-download-arrow{animation:project-draw 600ms ease 100ms forwards}.proof-art.is-playing .proof-app-tile{animation:proof-app-settle 650ms cubic-bezier(.22,.61,.36,1) 200ms forwards}
+.proof-art.is-armed .proof-chat{opacity:0;transform:translateY(3px)}.proof-art.is-playing .proof-chat{animation:project-appear 550ms ease 200ms forwards}.proof-art.is-playing .proof-chat-2{animation-delay:450ms}
+.proof-art.is-armed .proof-ledger{opacity:0;transform:translateY(5px)}.proof-art.is-playing .proof-ledger{animation:project-appear 550ms ease 100ms forwards}.proof-art.is-playing .proof-ledger-middle{animation-delay:300ms}.proof-art.is-playing .proof-ledger-front{animation-delay:500ms}
+.proof-art.is-armed:after{transform:scaleX(0)}.proof-art.is-playing:after{animation:proof-link-draw 800ms ease 350ms forwards}
+@keyframes proof-app-settle{to{opacity:1;transform:translateY(0)}}
+@keyframes proof-link-draw{to{transform:scaleX(1)}}
+@media(min-width:761px){.proof-grid>.proof-item{display:flex;flex-direction:column}.proof-item strong{min-height:42px}.proof-item p{margin-top:0}.proof-art{width:100%}}
+@media(min-width:761px) and (max-width:1050px){.proof-grid{--proof-gap:25px}.proof-item strong{min-height:64px}}
+@media(max-width:760px){.proof-grid>.proof-item{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:14px 20px;align-items:start}.proof-item strong{grid-column:1;grid-row:1}.proof-item p{grid-column:2;grid-row:1 / span 2;align-self:center}.proof-art{grid-column:1;grid-row:2;margin:0;height:82px;justify-items:start}.proof-art svg{width:139px;max-width:100%;height:auto}.proof-art:after{display:none}.proof-item strong span{display:block;margin-top:3px}}
+@media(prefers-reduced-motion:reduce){.proof-art *,.proof-art:after{animation:none!important}.proof-art .proof-download-arrow{stroke-dashoffset:0!important}.proof-art :is(.proof-app-tile,.proof-chat,.proof-ledger){opacity:1!important;transform:none!important}.proof-art:after{transform:none!important}}
+@media print{.proof-art{display:none}.proof-item p{grid-row:auto}}

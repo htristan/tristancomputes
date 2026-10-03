@@ -1,3 +1,72 @@
+// Once-only entrances. Content is visible by default without JavaScript or motion.
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+if ('IntersectionObserver' in window && !motionPreference.matches) {
+  const entrances = [...document.querySelectorAll(
+    '.selected-section .section-heading, .cards-grid > .work-card, ' +
+    '.approach-section > div, .approach-section li, .about-teaser > div, ' +
+    '.story-section, .career-heading, .community-leadership > *, .contact-band > *'
+  )];
+  const illustrations = [...document.querySelectorAll('.project-mini, .proof-art')];
+  const reveal = element => {
+    element.classList.remove('motion-pending');
+    element.classList.add('motion-visible');
+    if (element.matches('.project-mini, .proof-art')) element.classList.add('is-playing');
+  };
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      reveal(entry.target);
+      observer.unobserve(entry.target);
+    });
+  }, {threshold:0, rootMargin:'0px 0px -24px 0px'});
+  entrances.forEach(element => {
+    // Restored scroll positions and direct section links should be readable immediately.
+    if (element.getBoundingClientRect().top < window.innerHeight - 24) return;
+    const siblings = [...element.parentElement.children].filter(sibling => entrances.includes(sibling));
+    element.style.setProperty('--entrance-delay', `${Math.min(2, siblings.indexOf(element)) * 70}ms`);
+    element.classList.add('motion-enter', 'motion-pending');
+    observer.observe(element);
+  });
+  illustrations.forEach(element => {
+    element.classList.add('is-armed');
+    observer.observe(element);
+  });
+  document.addEventListener('focusin', event => {
+    const pending = event.target.closest('.motion-pending');
+    if (pending) { reveal(pending); observer.unobserve(pending); }
+  });
+  motionPreference.addEventListener('change', event => {
+    if (!event.matches) return;
+    observer.disconnect();
+    entrances.forEach(reveal);
+    illustrations.forEach(element => element.classList.remove('is-armed', 'is-playing'));
+  });
+}
+
+// Track the story itself; the next-story link and contact section are not reading time.
+const readingProgress = document.querySelector('.reading-progress');
+const readingContent = document.querySelector('.story-content');
+if (readingProgress && readingContent) {
+  const fill = readingProgress.querySelector('span');
+  let progressFrame = 0;
+  const updateProgress = () => {
+    progressFrame = 0;
+    const bounds = readingContent.getBoundingClientRect();
+    const start = bounds.top + window.scrollY - window.innerHeight * .35;
+    const end = bounds.bottom + window.scrollY - window.innerHeight * .8;
+    const fraction = Math.max(0, Math.min(1, (window.scrollY - start) / Math.max(1, end - start)));
+    fill.style.transform = `scaleX(${fraction})`;
+  };
+  const scheduleProgress = () => {
+    if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
+  };
+  readingProgress.classList.add('is-enabled');
+  window.addEventListener('scroll', scheduleProgress, {passive:true});
+  window.addEventListener('resize', scheduleProgress);
+  window.addEventListener('load', scheduleProgress, {once:true});
+  updateProgress();
+}
+
 // A quiet, keyboard-accessible cue for the section currently in view.
 // Navigation and all content remain functional without JavaScript.
 const storySections = document.querySelectorAll('.story-section');
